@@ -1,0 +1,139 @@
+$gray-light: #ddf;
+$brand-primary: #ddf;
+$brand-accent: #ddf;
+
+$btn-config: (
+        default:(
+                class: 'default',
+                color: $gray-light,
+                bg: #fff,
+                border-color: #ccc
+        ),
+        primary:(
+                class: 'primary',
+                color: #fff,
+                bg: $brand-primary,
+                border-color: $brand-primary
+        ),
+        accent:(
+                class: 'accent',
+                color: #fff,
+                bg: $brand-accent,
+                border-color: $brand-accent
+        ),
+        info:(
+                class: 'info',
+                color: #fff,
+                bg: #909399,
+                border-color: #909399
+        ),
+        first:(
+                class: 'first',
+                color: #fff,
+                bg: #2c94ff,
+                border-color: #2c94ff
+        ),
+        blue:(
+                class: 'blue',
+                color: #2424ef,
+                bg: #fff,
+                border-color: #fff
+        ),
+        green:(
+                class: 'green',
+                color: #fff,
+                bg: #128d3f,
+                border-color: #128d3f
+        ),
+);
+
+// @mixin 運算
+@mixin button-variant($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  transition: background-color .15s;
+  border-color: $border;
+
+  &:hover,
+  &:focus,
+  &.focus,
+  .open > &.dropdown-toggle {
+    color: $color;
+    background-color: darken($background, 6%);
+    border-color: darken($border, 8%);
+  }
+
+  &:active,
+  &.active {
+    color: $color;
+    background-color: darken($background, 10%);
+    border-color: darken($border, 14%);
+  }
+
+  &:active,
+  &.active,
+  .open > &.dropdown-toggle {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: $background;
+      border-color: $border;
+      cursor: not-allowed;
+    }
+  }
+
+  .badge {
+    color: $background;
+    background-color: $color;
+  }
+}
+
+// 基本 btn 結構
+.btn {
+  // 結構
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  /* offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: 0 4px 7px 1px rgba(0, 0, 0, 0.3);
+
+  &:hover, &:focus {
+    color: #333;
+    background-color: #e6e6e6;
+    outline: 0;
+  }
+
+  &:active {
+
+    /* offset-x | offset-y | blur-radius | spread-radius | color */
+    box-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@each $name, $value in $btn-config {
+  $class: map-get($value, class);
+  $color: map-get($value, color);
+  $bg: map-get($value, bg);
+  $border-color: map-get($value, border-color);
+
+  .btn-#{$class} {
+    @include button-variant($color, $bg, $border-color);
+  }
+}

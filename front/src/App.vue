@@ -1,13 +1,17 @@
 <template>
     <div id="app">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-              rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <router-view/>
     </div>
 </template>
 
 <style lang="scss">
     @import "./css/button-theme.scss";
+    @import "./css/common-style.scss";
+
+    *{
+        box-sizing: border-box;
+    }
 
     html,body{
         height: 100%;

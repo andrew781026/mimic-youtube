@@ -3,7 +3,7 @@
         <h1>歡迎來到 `影片街`</h1>
         <input type="text" id="username">
         <input type="text" id="password">
-        <button id="login" @click="login"></button>
+        <button id="login" @click="login">登入</button>
     </div>
 </template>
 

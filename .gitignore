@@ -9,6 +9,7 @@ node_modules
 
 # install file
 yarn.lock
+package-lock.json
 
 # Log files
 npm-debug.log*

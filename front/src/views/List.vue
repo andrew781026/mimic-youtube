@@ -55,7 +55,14 @@
                         title: '三隻小豬',
                         description: '三隻小豬買房且遇到大灰狼的故事',
                         img: require('@/assets/three-pigs.jpg'),
-                        isStar: true,// 收藏與否
+                        isStar: false,// 收藏與否
+                        length: 574, // 單位 (秒)
+                    },
+                    {
+                        title: '白雪公主之巫婆的告白',
+                        description: '你知道壞後母其實沒有要毒殺白雪公主，這個罪名是被人栽贓的嗎?',
+                        img: require('@/assets/witch.jpg'),
+                        isStar: false,// 收藏與否
                         length: 574, // 單位 (秒)
                     },
                 ]
@@ -79,8 +86,6 @@
         width: 250px;
         margin: 10px;
         border: 1px solid #333;
-
-
     }
 
     .image-wrapper {
@@ -90,8 +95,7 @@
         background-color: #423a3a;
 
         .image {
-
-            height: 100%;
+            object-fit: cover;
             width: 100%;
         }
 
@@ -131,11 +135,11 @@
         }
 
         .is-starred {
-            color: #ffffff;
+            color: #f30303;
         }
 
         .not-starred {
-            color: #f30303;
+            color: #ffffff;
         }
     }
 </style>

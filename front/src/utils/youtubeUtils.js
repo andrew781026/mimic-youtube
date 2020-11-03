@@ -36,7 +36,7 @@ const API_KEY = 'AIzaSyA1HsDdjJDtuw2L3zVMA_9lWdrqn5K6_J4';
  */
 const searchVideo = async ({
                                id,
-                               part,
+                               part ,
                                chart,
                                maxResults,
                                q,
@@ -56,6 +56,9 @@ const searchVideo = async ({
                 q,
                 maxResults,
                 myRating,
+                pageToken,
+                regionCode,
+                videoCategoryId,
                 key: API_KEY, // 使用 API 只能取得公開的播放清單
             }
         });

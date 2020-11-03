@@ -1,5 +1,5 @@
 <template>
-    <video ref="video" controls></video>
+    <video class="video-part" ref="video" controls></video>
 </template>
 
 <script>
@@ -28,6 +28,18 @@
                     hls.loadSource(this.url);
                 });
 
+                // TODO 影片暫停時 , 撥放廣告
+
+                video.addEventListener("pause", () => {
+
+                    console.log('video pause ✋');
+                });
+
+                // TODO 影片撥放時 , 停止廣告
+                video.addEventListener("play", () => {
+
+                    console.log('video play 🚀');
+                });
             }
         }
     }
@@ -35,4 +47,8 @@
 
 <style scoped>
 
+    .video-part {
+        width: 100%;
+        height: 100%;
+    }
 </style>

@@ -1,0 +1,13 @@
+{
+  "name": "movie-town-test",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:unit_youtube": "jest --runTestsByPath ./__tests__/unit/YoutubeUtils-test.js"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "jest": "^26.0.1"
+  }
+}

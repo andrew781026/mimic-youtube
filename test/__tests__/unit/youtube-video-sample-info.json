@@ -1,0 +1,80 @@
+{
+  "kind": "youtube#video",
+  "etag": "b4dNBqDB7GEF73Z0xvkq-Aj906Y",
+  "id": "coZbOM6E47I",
+  "snippet": {
+    "publishedAt": "2020-06-10T15:53:26Z",
+    "channelId": "UCCezIgC97PvUuR4_gbFUs5g",
+    "title": "Python YouTube API Tutorial: Calculating the Duration of a Playlist",
+    "description": "In this Python Programming Tutorial, we'll be learning how to calculate the duration of a YouTube playlist. The duration of a playlist is likely one of the first things people will look for before watching, but YouTube doesn't currently have this information available on their site. So we will use the API to calculate this for us. Let's get started...\n\nThe code for this video can be found at:\nhttps://bit.ly/YouTubeAPI-02\n\nYouTube API Tutorial - https://youtu.be/th5_9woFJmk\nRegular Expressions Tutorial - https://youtu.be/K8L6KVGG-7o\nDatetime Tutorial - https://youtu.be/eirjjyP2qcQ\n\nYouTube API Docs - https://developers.google.com/youtube/v3\nGoogle API Python Client - https://github.com/googleapis/google-api-python-client\n\n✅ Support My Channel Through Patreon:\nhttps://www.patreon.com/coreyms\n\n✅ Become a Channel Member:\nhttps://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g/join\n\n✅ One-Time Contribution Through PayPal:\nhttps://goo.gl/649HFY\n\n✅ Cryptocurrency Donations:\nBitcoin Wallet - 3MPH8oY2EAgbLVy7RBMinwcBntggi7qeG3\nEthereum Wallet - 0x151649418616068fB46C3598083817101d3bCD33\nLitecoin Wallet - MPvEBY5fxGkmPQgocfJbxP6EmTo5UUXMot\n\n✅ Corey's Public Amazon Wishlist\nhttp://a.co/inIyro1\n\n✅ Equipment I Use and Books I Recommend:\nhttps://www.amazon.com/shop/coreyschafer\n\n▶️ You Can Find Me On:\nMy Website - http://coreyms.com/\nMy Second Channel - https://www.youtube.com/c/coreymschafer\nFacebook - https://www.facebook.com/CoreyMSchafer\nTwitter - https://twitter.com/CoreyMSchafer\nInstagram - https://www.instagram.com/coreymschafer/\n\n#Python",
+    "thumbnails": {
+      "default": {
+        "url": "https://i.ytimg.com/vi/coZbOM6E47I/default.jpg",
+        "width": 120,
+        "height": 90
+      },
+      "medium": {
+        "url": "https://i.ytimg.com/vi/coZbOM6E47I/mqdefault.jpg",
+        "width": 320,
+        "height": 180
+      },
+      "high": {
+        "url": "https://i.ytimg.com/vi/coZbOM6E47I/hqdefault.jpg",
+        "width": 480,
+        "height": 360
+      },
+      "standard": {
+        "url": "https://i.ytimg.com/vi/coZbOM6E47I/sddefault.jpg",
+        "width": 640,
+        "height": 480
+      },
+      "maxres": {
+        "url": "https://i.ytimg.com/vi/coZbOM6E47I/maxresdefault.jpg",
+        "width": 1280,
+        "height": 720
+      }
+    },
+    "channelTitle": "Corey Schafer",
+    "tags": [
+      "python",
+      "youtube api",
+      "youtube-api",
+      "python youtube",
+      "google-api-python-client",
+      "youtube data api",
+      "youtube",
+      "python automate",
+      "python api",
+      "python tutorial",
+      "corey schafer",
+      "data science",
+      "data analysis",
+      "python web api",
+      "python automation",
+      "python real world examples",
+      "api tutorial",
+      "application programming interface",
+      "python youtube api",
+      "youtube data",
+      "youtube playlist duration",
+      "youtube playlist total time",
+      "youtube playlist duration calculator"
+    ],
+    "categoryId": "27",
+    "liveBroadcastContent": "none",
+    "localized": {
+      "title": "Python YouTube API Tutorial: Calculating the Duration of a Playlist",
+      "description": "In this Python Programming Tutorial, we'll be learning how to calculate the duration of a YouTube playlist. The duration of a playlist is likely one of the first things people will look for before watching, but YouTube doesn't currently have this information available on their site. So we will use the API to calculate this for us. Let's get started...\n\nThe code for this video can be found at:\nhttps://bit.ly/YouTubeAPI-02\n\nYouTube API Tutorial - https://youtu.be/th5_9woFJmk\nRegular Expressions Tutorial - https://youtu.be/K8L6KVGG-7o\nDatetime Tutorial - https://youtu.be/eirjjyP2qcQ\n\nYouTube API Docs - https://developers.google.com/youtube/v3\nGoogle API Python Client - https://github.com/googleapis/google-api-python-client\n\n✅ Support My Channel Through Patreon:\nhttps://www.patreon.com/coreyms\n\n✅ Become a Channel Member:\nhttps://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g/join\n\n✅ One-Time Contribution Through PayPal:\nhttps://goo.gl/649HFY\n\n✅ Cryptocurrency Donations:\nBitcoin Wallet - 3MPH8oY2EAgbLVy7RBMinwcBntggi7qeG3\nEthereum Wallet - 0x151649418616068fB46C3598083817101d3bCD33\nLitecoin Wallet - MPvEBY5fxGkmPQgocfJbxP6EmTo5UUXMot\n\n✅ Corey's Public Amazon Wishlist\nhttp://a.co/inIyro1\n\n✅ Equipment I Use and Books I Recommend:\nhttps://www.amazon.com/shop/coreyschafer\n\n▶️ You Can Find Me On:\nMy Website - http://coreyms.com/\nMy Second Channel - https://www.youtube.com/c/coreymschafer\nFacebook - https://www.facebook.com/CoreyMSchafer\nTwitter - https://twitter.com/CoreyMSchafer\nInstagram - https://www.instagram.com/coreymschafer/\n\n#Python"
+    },
+    "defaultAudioLanguage": "en"
+  },
+  "contentDetails": {
+    "duration": "PT37M38S",
+    "dimension": "2d",
+    "definition": "hd",
+    "caption": "false",
+    "licensedContent": true,
+    "contentRating": {},
+    "projection": "rectangular"
+  }
+}

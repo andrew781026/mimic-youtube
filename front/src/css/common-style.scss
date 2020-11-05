@@ -1,10 +1,31 @@
 
+// 多行 ellipsis : https://css-tricks.com/almanac/properties/l/line-clamp/
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// 單行 ellipsis : https://css-tricks.com/almanac/properties/l/line-clamp/
+.truncate {
+  text-overflow: ellipsis;
+
+  /* Needed to make it work */
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
 
 .text-left {
   text-align: left;
+}
+
+.flex-1{
+  flex:1;
 }
 
 .p-6 {

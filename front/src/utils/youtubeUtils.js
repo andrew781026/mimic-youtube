@@ -23,7 +23,7 @@ const API_KEY = 'AIzaSyA1HsDdjJDtuw2L3zVMA_9lWdrqn5K6_J4';
  * */
 
 /**
- * 查詢 Youtube 上的影片
+ * 列表 Youtube 上的影片
  * @param {string} id - Youtube 影片編號
  * @param {string} part - 必填，把需要的回傳資訊列表出來
  * @param {string} chart - 圖表類型，目前只有參數 mostPopular 可用，用於回傳指定 "地區" 與 "類型" 最受歡迎的影片
@@ -32,19 +32,17 @@ const API_KEY = 'AIzaSyA1HsDdjJDtuw2L3zVMA_9lWdrqn5K6_J4';
  * @param {string=} pageToken - 分頁時查詢上一頁 & 下一頁所用的 token
  * @param {string=} regionCode - 區域代碼
  * @param {string=} videoCategoryId - 影片分類編號
- * @param {string} q - 查詢文字
  */
-const searchVideo = async ({
-                               id,
-                               part ,
-                               chart,
-                               maxResults,
-                               q,
-                               myRating,
-                               pageToken,
-                               regionCode,
-                               videoCategoryId
-                           }) => {
+const listVideo = async ({
+                             id,
+                             part,
+                             chart,
+                             maxResults,
+                             myRating,
+                             pageToken,
+                             regionCode,
+                             videoCategoryId
+                         }) => {
 
     // list the video you want to search
     const res = await axios.get('https://www.googleapis.com/youtube/v3/videos',
@@ -53,7 +51,6 @@ const searchVideo = async ({
                 id,
                 chart,
                 part,
-                q,
                 maxResults,
                 myRating,
                 pageToken,
@@ -66,6 +63,43 @@ const searchVideo = async ({
     return res.data;
 };
 
-const YoutubeUtils = {searchVideo};
+
+/**
+ * 查詢 Youtube 上的影片
+ * @param {string} part - 必填，把需要的回傳資訊列表出來
+ * @param {number} maxResults - 回傳筆數上限，預設為五筆資料，可以設定 1 ~ 50
+ * @param {string=} pageToken - 分頁時查詢上一頁 & 下一頁所用的 token
+ * @param {string=} regionCode - 區域代碼
+ * @param {string=} videoCategoryId - 影片分類編號
+ * @param {string} q - 查詢文字
+ */
+const searchVideo = async ({
+                               part,
+                               maxResults,
+                               q,
+                               pageToken,
+                               regionCode,
+                               videoCategoryId
+                           }) => {
+
+    // list the video you want to search
+    const res = await axios.get('https://youtube.googleapis.com/youtube/v3/search',
+        {
+            params: {
+                part,
+                q,
+                maxResults,
+                pageToken,
+                regionCode,
+                videoCategoryId,
+                key: API_KEY, // 使用 API 只能取得公開的播放清單
+            }
+        });
+
+    return res.data;
+};
+
+
+const YoutubeUtils = {listVideo, searchVideo};
 
 export default YoutubeUtils;

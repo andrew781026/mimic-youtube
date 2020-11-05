@@ -35,7 +35,7 @@
 
     .home-main{
         padding:20px;
-        height: 100vh;
+        max-height: 100vh;
         overflow: auto;
     }
 

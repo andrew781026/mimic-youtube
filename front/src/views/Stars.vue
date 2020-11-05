@@ -30,6 +30,8 @@
         methods: {
             parse(videoLength) {
 
+                if (!videoLength) return '';
+
                 // youtube 給出的時間資訊 PT2H3M8S , 需要轉換格式
                 const timeArr = videoLength.replace('PT', '').split(/[HMS]/);
 
@@ -59,32 +61,45 @@
         },
         mounted() {
 
-            YoutubeUtils.searchVideo({
-                maxResults: 12,
-                q: 'amoung us',
-                part: 'snippet,contentDetails',
-                chart: 'mostPopular',
-                regionCode: 'TW'
-            })
-                .then(data => {
+            const getVideos = async () => {
 
-                    this.videos = data.items.map(item => {
-
-                        const snippet = item.snippet;
-                        const contentDetails = item.contentDetails;
-
-                        return {
-                            id: item.id,
-                            length: contentDetails.duration,   // PT2H37M38S
-                            publishedAt: snippet.publishedAt,
-                            title: snippet.title,
-                            description: snippet.description,
-                            img: snippet.thumbnails.standard.url,
-                            isStar: false,
-                        }
-                    });
+                const tempVideos = await YoutubeUtils.searchVideo({
+                    maxResults: 12,
+                    q: 'amoung us 台灣',
+                    // part: 'snippet,contentDetails',
+                    part: 'snippet',
+                    chart: 'mostPopular',
+                    regionCode: 'TW'
                 })
-                .catch(console.error);
+
+                this.nextPageToken = tempVideos.nextPageToken;
+
+                const videoIds = tempVideos.items.map(item => item.id.videoId).join(',');
+
+                const data = await YoutubeUtils.listVideo({
+                    id: videoIds,
+                    part: 'snippet,contentDetails',
+                    regionCode: 'TW'
+                })
+
+                this.videos = data.items.map(item => {
+
+                    const snippet = item.snippet;
+                    const contentDetails = item.contentDetails;
+
+                    return {
+                        id: item.id,
+                        length: contentDetails && contentDetails.duration,   // PT2H37M38S
+                        publishedAt: snippet.publishedAt,
+                        title: snippet.title,
+                        description: snippet.description,
+                        img: snippet.thumbnails.high.url,
+                        isStar: false,
+                    }
+                });
+            };
+
+            getVideos().catch(console.error);
         },
         data() {
 
@@ -98,30 +113,14 @@
             */
 
             return {
-                videos: []
+                videos: [],
+                nextPageToken: undefined
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-
-    // 多行 ellipsis : https://css-tricks.com/almanac/properties/l/line-clamp/
-    .line-clamp {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    // 單行 ellipsis : https://css-tricks.com/almanac/properties/l/line-clamp/
-    .truncate {
-        text-overflow: ellipsis;
-
-        /* Needed to make it work */
-        overflow: hidden;
-        white-space: nowrap;
-    }
 
     .list-root {
         display: flex;

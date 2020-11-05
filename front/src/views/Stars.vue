@@ -8,10 +8,9 @@
                         {{parse(video.length)}}
                     </div>
                 </div>
-                <div style="text-align: left;padding: 10px">
-                    <span>標題：{{video.title}}</span>
-                    <br>
-                    <span>描述：{{video.description.substring(0,30)}}</span>
+                <div class="text-left p-6">
+                    <div class="truncate">標題：{{video.title}}</div>
+                    <span class="line-clamp">描述：{{video.description}}</span>
                 </div>
                 <div class="star-wrapper" @click.stop="setStar(video,index)">
                     <i id="heart-icon"
@@ -31,6 +30,7 @@
         methods: {
             parse(videoLength) {
 
+                // youtube 給出的時間資訊 PT2H3M8S , 需要轉換格式
                 const timeArr = videoLength.replace('PT', '').split(/[HMS]/);
 
                 const padLeft = (arr, index) => {
@@ -64,7 +64,7 @@
                 q: 'amoung us',
                 part: 'snippet,contentDetails',
                 chart: 'mostPopular',
-                regionCode:'TW'
+                regionCode: 'TW'
             })
                 .then(data => {
 
@@ -83,7 +83,6 @@
                             isStar: false,
                         }
                     });
-
                 })
                 .catch(console.error);
         },
@@ -106,6 +105,23 @@
 </script>
 
 <style scoped lang="scss">
+
+    // 多行 ellipsis : https://css-tricks.com/almanac/properties/l/line-clamp/
+    .line-clamp {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    // 單行 ellipsis : https://css-tricks.com/almanac/properties/l/line-clamp/
+    .truncate {
+        text-overflow: ellipsis;
+
+        /* Needed to make it work */
+        overflow: hidden;
+        white-space: nowrap;
+    }
 
     .list-root {
         display: flex;

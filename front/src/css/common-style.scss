@@ -1,4 +1,34 @@
 
-.overflow-hidden{
+.overflow-hidden {
   overflow: hidden;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.p-6 {
+  padding: 0.6rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
+$positions: ('top', 'bottom','left','right');
+
+$margin-config: (12,24);
+
+@each $number in $margin-config {
+
+  @each $position in $positions {
+
+    .m#{str-slice($position, 0, 1)}-#{$number} {
+      margin-#{$position}: #{$number/10}rem;
+    }
+  }
 }

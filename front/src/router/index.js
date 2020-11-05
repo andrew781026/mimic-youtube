@@ -7,36 +7,44 @@ const routes = [
     {
         path: '/',
         name: 'Home',
-        component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
+        component: () => import('../views/Home.vue'),
+        children: [
+            {
+                path: '/video',
+                name: 'Video',
+                component: () => import( '../components/VideoPlayer.vue')
+            },
+            {
+                path: '/star',
+                name: 'Star',
+                component: () => import('../views/Stars.vue')
+            },
+            {
+                path: '/list',
+                name: 'List',
+                component: () => import( '../views/List.vue')
+            },
+            {
+                path: '/detail',
+                name: 'Detail',
+                component: () => import( '../views/Detail.vue')
+            },
+            {
+                path: '/play',
+                name: 'Play',
+                component: () => import( '../views/Play.vue')
+            },
+        ]
     },
     {
-        path: '/video',
-        name: 'Video',
-        component: () => import( '../components/VideoPlayer.vue')
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/Login.vue')
     },
-    {
-        path: '/star',
-        name: 'Star',
-        component: () => import('../views/Stars.vue')
-    },
-    {
-        path: '/list',
-        name: 'List',
-        component: () => import( '../views/List.vue')
-    },
-    {
-        path: '/detail',
-        name: 'Detail',
-        component: () => import( '../views/Detail.vue')
-    },
-    {
-        path: '/play',
-        name: 'Play',
-        component: () => import( '../views/Play.vue')
-    },
+
     {
         path: "*",
-        redirect: {name: 'Home'}
+        redirect: {name: 'Login'}
     },
 ]
 

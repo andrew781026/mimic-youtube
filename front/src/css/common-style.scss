@@ -19,6 +19,10 @@
   width: 50%;
 }
 
+.relative{
+  position: relative;
+}
+
 $positions: ('top', 'bottom','left','right');
 
 $margin-config: (12,24);

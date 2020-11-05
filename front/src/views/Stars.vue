@@ -126,16 +126,43 @@
     .list-root {
         display: flex;
         flex-wrap: wrap;
-        width: 100vw;
+        width: 100%;
     }
 
     .card {
+        user-select: none;
         cursor: pointer;
         position: relative;
         height: 250px;
         width: 250px;
         margin: 10px;
         border: 1px solid #333;
+
+        &::after {
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            content: "";
+            position: absolute;
+            background-color: #333;
+            transition: all 0.2s;
+            opacity: 0;
+        }
+
+        &:hover {
+
+            &::after {
+                opacity: 0.4;
+            }
+        }
+
+        &:active {
+
+            &::after {
+                opacity: 0.6;
+            }
+        }
     }
 
     .image-wrapper {

@@ -1,4 +1,5 @@
 import YoutubeUtils from '@/utils/youtubeUtils';
+import FavoriteService from './favoriteService';
 
 class VideoService {
 
@@ -25,6 +26,8 @@ class VideoService {
     };
 
     static getVideos = async pageToken => {
+
+        const favoriteChecker = await FavoriteService.getFavoriteChecker();
 
         const tempVideos = await YoutubeUtils.searchVideo({
             pageToken,
@@ -60,7 +63,7 @@ class VideoService {
                 title: snippet.title,
                 description: snippet.description,
                 img: snippet.thumbnails.high.url,
-                isStar: false,
+                isFav: favoriteChecker(item.id),
             }
         });
 

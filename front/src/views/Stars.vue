@@ -15,7 +15,7 @@
                 <div class="star-wrapper" @click.stop="setStar(video,index)">
                     <i id="heart-icon"
                        class="fa fas fa-heart"
-                       :class="[video.isStar ? 'is-starred':'not-starred']"/>
+                       :class="[video.isFav ? 'is-starred':'not-starred']"/>
                 </div>
             </div>
         </template>
@@ -28,6 +28,7 @@
 
 <script>
     import VideoService from '@/services/videoService';
+    import FavoriteService from '@/services/favoriteService';
 
     export default {
         name: "Stars",
@@ -53,8 +54,11 @@
             },
             setStar(video, index) {
 
-                const newVideo = {...video, isStar: !video.isStar};
-                this.videos.splice(index, 1, newVideo);
+                const newVideo = {...video, isFav: !video.isFav};
+
+                FavoriteService.toggleFavorite(video)
+                    .then(() => this.videos.splice(index, 1, newVideo))
+                    .catch(console.error);
             },
             openLink(videoId) {
 
@@ -102,7 +106,7 @@
         margin: 10px;
         border: 1px solid #333;
 
-        &::after {
+        &::before {
             top: 0;
             left: 0;
             height: 100%;
@@ -116,14 +120,14 @@
 
         &:hover {
 
-            &::after {
+            &::before {
                 opacity: 0.4;
             }
         }
 
         &:active {
 
-            &::after {
+            &::before {
                 opacity: 0.6;
             }
         }

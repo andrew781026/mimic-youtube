@@ -5,7 +5,7 @@
                 <div class="image-wrapper">
                     <img class="image" :src="video.img" :alt="video.title">
                     <div class="length-wrapper">
-                        {{parse(video.length)}}
+                        {{video.length}}
                     </div>
                 </div>
                 <div class="text-left p-6">
@@ -19,35 +19,37 @@
                 </div>
             </div>
         </template>
+        <div>
+            <h1 @click="goPrev">上一頁</h1>
+            <h1 @click="goNext">下一頁</h1>
+        </div>
     </div>
 </template>
 
 <script>
-    import YoutubeUtils from '@/utils/youtubeUtils';
+    import VideoService from '@/services/videoService';
 
     export default {
         name: "Stars",
         methods: {
-            parse(videoLength) {
+            showVideos(pageToken) {
 
-                if (!videoLength) return '';
+                VideoService.getVideos(pageToken)
+                    .then(({videos, nextPageToken, prevPageToken}) => {
 
-                // youtube 給出的時間資訊 PT2H3M8S , 需要轉換格式
-                const timeArr = videoLength.replace('PT', '').split(/[HMS]/);
+                        this.videos = videos;
+                        this.nextPageToken = nextPageToken;
+                        this.prevPageToken = prevPageToken;
+                    })
+                    .catch(console.error);
+            },
+            goPrev() {
 
-                const padLeft = (arr, index) => {
+                this.showVideos(this.prevPageToken);
+            },
+            goNext() {
 
-                    const num = arr[index];
-
-                    if (!num) return '00';
-                    else if (num.length === 1) return `0${num}`;
-                    else return num;
-                }
-
-                if (timeArr.length === 2) return `00:00:${padLeft(timeArr, 0)}`;
-                else if (timeArr.length === 3) return `00:${padLeft(timeArr, 0)}:${padLeft(timeArr, 1)}`;
-                else if (timeArr.length === 4) return `${padLeft(timeArr, 0)}:${padLeft(timeArr, 1)}:${padLeft(timeArr, 2)}`;
-                else return '';
+                this.showVideos(this.nextPageToken);
             },
             setStar(video, index) {
 
@@ -57,49 +59,11 @@
             openLink(videoId) {
 
                 window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
-            }
+            },
         },
         mounted() {
 
-            const getVideos = async () => {
-
-                const tempVideos = await YoutubeUtils.searchVideo({
-                    maxResults: 12,
-                    q: 'amoung us 台灣',
-                    // part: 'snippet,contentDetails',
-                    part: 'snippet',
-                    chart: 'mostPopular',
-                    regionCode: 'TW'
-                })
-
-                this.nextPageToken = tempVideos.nextPageToken;
-
-                const videoIds = tempVideos.items.map(item => item.id.videoId).join(',');
-
-                const data = await YoutubeUtils.listVideo({
-                    id: videoIds,
-                    part: 'snippet,contentDetails',
-                    regionCode: 'TW'
-                })
-
-                this.videos = data.items.map(item => {
-
-                    const snippet = item.snippet;
-                    const contentDetails = item.contentDetails;
-
-                    return {
-                        id: item.id,
-                        length: contentDetails && contentDetails.duration,   // PT2H37M38S
-                        publishedAt: snippet.publishedAt,
-                        title: snippet.title,
-                        description: snippet.description,
-                        img: snippet.thumbnails.high.url,
-                        isStar: false,
-                    }
-                });
-            };
-
-            getVideos().catch(console.error);
+            this.showVideos();
         },
         data() {
 
@@ -114,7 +78,8 @@
 
             return {
                 videos: [],
-                nextPageToken: undefined
+                nextPageToken: undefined,
+                prevPageToken: undefined,
             }
         }
     }

@@ -25,3 +25,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+
+serviceAccountKey.json
+/front/src/utils/firestore/serviceAccountKey.json

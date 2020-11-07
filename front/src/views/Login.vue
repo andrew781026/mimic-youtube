@@ -8,9 +8,9 @@
             </div>
             <div class="login-form">
                 <p>帳號：</p>
-                <input class="custom-input" type="text" id="username"  placeholder="在此輸入帳號">
+                <input class="custom-input" type="text" id="username" placeholder="在此輸入帳號">
                 <p>密碼：</p>
-                <input class="custom-input" type="password" id="password"  placeholder="在此輸入密碼">
+                <input class="custom-input" type="password" id="password" placeholder="在此輸入密碼">
                 <button id="login" class="btn_sample w-full mt-12 mb-24" @click="login">登入</button>
             </div>
         </div>
@@ -22,7 +22,7 @@
         name: "Login",
         methods: {
             login() {
-                this.$router.push({name: "List"});
+                this.$router.push({name: "Star"});
             }
         }
     }
@@ -30,7 +30,7 @@
 
 <style scoped lang="scss">
 
-    .custom-input{
+    .custom-input {
         display: block;
         height: 40px;
         font-size: 1rem;
@@ -60,7 +60,7 @@
         }
     }
 
-    .login-title{
+    .login-title {
 
         font-size: 50px;
         font-weight: 700;

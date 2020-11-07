@@ -1,24 +1,30 @@
 <template>
-    <div class="list-root">
-        <template v-for="(video ,index) in videos">
-            <div class="card" :key="`video-${index}`" @click="openLink(video.id)">
-                <div class="image-wrapper">
-                    <img class="image" :src="video.img" :alt="video.title">
-                    <div class="length-wrapper">
-                        {{video.length}}
+    <div class="star-root">
+        <div class="list-root">
+            <div v-for="(video ,index) in videos"
+                 :key="`video-${index}`"
+                 class="card"
+                 @click="openLink(video.id)"
+            >
+                <div class="inner-card">
+                    <div class="image-wrapper">
+                        <img class="image" :src="video.img" :alt="video.title">
+                        <div class="length-wrapper">
+                            {{video.length}}
+                        </div>
+                    </div>
+                    <div class="text-left p-6">
+                        <div class="truncate">標題：{{video.title}}</div>
+                        <span class="line-clamp">描述：{{video.description}}</span>
                     </div>
                 </div>
-                <div class="text-left p-6">
-                    <div class="truncate">標題：{{video.title}}</div>
-                    <span class="line-clamp">描述：{{video.description}}</span>
-                </div>
-                <div class="star-wrapper" @click.stop="setStar(video,index)">
+                <div class="fav-wrapper" @click.stop="setStar(video,index)">
                     <i id="heart-icon"
                        class="fa fas fa-heart"
                        :class="[video.isFav ? 'is-starred':'not-starred']"/>
                 </div>
             </div>
-        </template>
+        </div>
         <div>
             <h1 @click="goPrev">上一頁</h1>
             <h1 @click="goNext">下一頁</h1>
@@ -94,6 +100,11 @@
     .list-root {
         display: flex;
         flex-wrap: wrap;
+    }
+
+    .star-root {
+        display: flex;
+        flex-direction: column;
         width: 100%;
     }
 
@@ -105,6 +116,11 @@
         width: 250px;
         margin: 10px;
         border: 1px solid #333;
+    }
+
+    .inner-card {
+        height: 100%;
+        width: 100%;
 
         &::before {
             top: 0;
@@ -158,7 +174,7 @@
 
     }
 
-    .star-wrapper {
+    .fav-wrapper {
         cursor: pointer;
         position: absolute;
         left: 0;

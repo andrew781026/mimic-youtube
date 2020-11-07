@@ -52,6 +52,7 @@ class VideoService {
             const contentDetails = item.contentDetails;
 
             return {
+                org: item,
                 id: item.id,
                 duration: contentDetails.duration,   // PT2H37M38S
                 length: VideoService.durationParse(contentDetails.duration),   // PT2H37M38S

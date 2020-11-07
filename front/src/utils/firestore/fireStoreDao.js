@@ -1,12 +1,16 @@
 const db = require('./init');
 
-const BaseDao = {
+const FireStoreDao = {
 
     list: async (collectionPath) => {
 
-        const docRef = db.collection(collectionPath);
+        const querySnapshot = await db.collection(collectionPath).get();
 
-        const doc = await docRef.get();
+        return querySnapshot.docs.map(doc => ({_id: doc.id, ...doc.data()}));
+    },
+    findById: async (collectionPath, id) => {
+
+        const doc = await db.collection(collectionPath).doc(id).get();
 
         if (doc.exists) return doc.data();
         else return null;
@@ -19,7 +23,7 @@ const BaseDao = {
     },
     addMulti: async (collectionPath, items) => {
 
-        return await Promise.all(items.map(item => SenderUtils.add(collectionPath, item)));
+        return await Promise.all(items.map(item => FireStoreDao.add(collectionPath, item)));
     },
     update: async (collectionPath, item) => {
 
@@ -27,11 +31,11 @@ const BaseDao = {
         const docRef = db.collection(collectionPath);
         return await docRef.doc(id).update({...item, update_at: new Date()});
     },
-    del: async (collectionPath, id) => {
+    delete: async (collectionPath, id) => {
 
         const docRef = db.collection(collectionPath);
         return await docRef.doc(id).delete();
     },
 }
 
-module.exports = SenderUtils;
+module.exports = FireStoreDao;

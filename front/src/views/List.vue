@@ -1,23 +1,25 @@
 <template>
     <div class="list-root">
-        <template v-for="(video ,index) in videos">
-            <div class="card" :key="`video-${index}`">
-                <div class="image-wrapper">
-                    <img class="image" :src="video.img" :alt="video.title">
-                    <div class="length-wrapper">{{video.length}}</div>
-                </div>
-                <div style="text-align: left;padding: 10px">
-                    <span>標題：{{video.title}}</span>
-                    <br>
-                    <span>描述：{{video.description}}</span>
-                </div>
-                <div class="star-wrapper" @click="setStar(video,index)">
-                    <i id="heart-icon"
-                       class="fa fas fa-heart"
-                       :class="[video.isStar ? 'is-starred':'not-starred']"/>
-                </div>
+        <div class="card"
+             :key="`video-${index}`"
+             v-for="(video ,index) in videos"
+             @click="goDetail"
+        >
+            <div class="image-wrapper">
+                <img class="image" :src="video.img" :alt="video.title">
+                <div class="length-wrapper">{{video.length}}</div>
             </div>
-        </template>
+            <div style="text-align: left;padding: 10px">
+                <span>標題：{{video.title}}</span>
+                <br>
+                <span>描述：{{video.description}}</span>
+            </div>
+            <div class="star-wrapper" @click="setStar(video,index)">
+                <i id="heart-icon"
+                   class="fa fas fa-heart"
+                   :class="[video.isStar ? 'is-starred':'not-starred']"/>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -29,7 +31,11 @@
 
                 const newVideo = {...video, isStar: !video.isStar};
                 this.videos.splice(index, 1, newVideo);
-            }
+            },
+            goDetail() {
+
+                this.$router.push({name: "Detail"});
+            },
         },
         data() {
 
@@ -80,6 +86,7 @@
     }
 
     .card {
+        cursor: pointer;
         position: relative;
         height: 250px;
         width: 250px;

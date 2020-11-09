@@ -25,31 +25,45 @@ class VideoService {
         else return '';
     };
 
-    static getVideos = async pageToken => {
+    // 查出 100 筆影片資訊
+    static getVideos = async (searchText) => {
 
         const favoriteChecker = await FavoriteService.getFavoriteChecker();
+        const getVideoIds = arr => arr.map(item => item.id.videoId);
 
-        const tempVideos = await YoutubeUtils.searchVideo({
-            pageToken,
-            maxResults: 12,
-            q: 'amoung us 台灣',
+        const searchConfig = {
+            maxResults: 50,
+            q: searchText,
             part: 'snippet',
             chart: 'mostPopular',
             regionCode: 'TW'
-        });
+        };
 
-        const nextPageToken = tempVideos.nextPageToken;
-        const prevPageToken = tempVideos.prevPageToken;
+        const getListConfig = (videoIds, pageNumber = 1) => ({
 
-        const videoIds = tempVideos.items.map(item => item.id.videoId).join(',');
-
-        const data = await YoutubeUtils.listVideo({
-            id: videoIds,
+            id: videoIds.slice(50 * (pageNumber - 1), 50 * pageNumber).join(','),
+            maxResults: 50,
             part: 'snippet,contentDetails',
             regionCode: 'TW'
-        })
+        });
 
-        const videos = data.items.map(item => {
+        const tempVideos01 = await YoutubeUtils.searchVideo(searchConfig);
+        const tempVideos02 = await YoutubeUtils.searchVideo({...searchConfig, pageToken: tempVideos01.nextPageToken,});
+        const tempVideos03 = await YoutubeUtils.searchVideo({...searchConfig, pageToken: tempVideos02.nextPageToken,});
+
+        const tempVideos = [...tempVideos01.items, ...tempVideos02.items, ...tempVideos03.items];
+
+        const videoIds = [...new Set(getVideoIds(tempVideos))];
+
+        const nextPageToken = tempVideos01.nextPageToken;
+        const prevPageToken = tempVideos01.prevPageToken;
+
+        // 需要處理重複的影片
+        const data01 = await YoutubeUtils.listVideo(getListConfig(videoIds, 1));
+        const data02 = await YoutubeUtils.listVideo(getListConfig(videoIds, 2));
+        const data03 = await YoutubeUtils.listVideo(getListConfig(videoIds, 3));
+
+        const videos = [...data01.items, ...data02.items, ...data03.items].map(item => {
 
             const snippet = item.snippet;
             const contentDetails = item.contentDetails;

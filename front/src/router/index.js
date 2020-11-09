@@ -10,11 +10,6 @@ const routes = [
         component: () => import('../views/Home.vue'),
         children: [
             {
-                path: '/video',
-                name: 'Video',
-                component: () => import( '../components/VideoPlayer.vue')
-            },
-            {
                 path: '/star',
                 name: 'Star',
                 component: () => import('../views/Stars.vue')

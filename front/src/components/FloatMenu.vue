@@ -14,13 +14,22 @@
         name: "FloatMenu",
         data() {
 
+            const goTargetPath = pathName => {
+
+                if (this.$router.currentRoute.name !== pathName) {
+
+                    this.$router.push({name: pathName})
+                    this.$emit('hide');
+                }
+            }
+
             return {
                 menus: [
-                    {name: '登出', onclick: () => this.$router.push({name: "Login"})},
-                    {name: '首頁', onclick: () => this.$router.push({name: "ListVideo"})},
-                    {name: '收藏頁', onclick: () => this.$router.push({name: "Star"})},
-                    {name: '列表頁', onclick: () => this.$router.push({name: "ListVideo"})},
-                    {name: '撥放頁', onclick: () => this.$router.push({name: "Detail"})},
+                    {name: '登出', onclick: () => goTargetPath("Login")},
+                    {name: '首頁', onclick: () => goTargetPath("ListVideo")},
+                    {name: '收藏頁', onclick: () => goTargetPath("Star")},
+                    {name: '列表頁', onclick: () => goTargetPath("ListVideo")},
+                    {name: '撥放頁', onclick: () => goTargetPath("Detail")},
                 ]
             }
         }

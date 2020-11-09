@@ -2,6 +2,7 @@
     <div class="menu-root">
         <span class="menu-item"
               :key="`menu-item-${index}`"
+              @click="menu.onclick"
               v-for="(menu,index) in menus">
             {{menu.name}}
         </span>
@@ -15,11 +16,11 @@
 
             return {
                 menus: [
-                    {name: '登出'},
-                    {name: '首頁'},
-                    {name: '收藏頁'},
-                    {name: '列表頁'},
-                    {name: '撥放頁'},
+                    {name: '登出', onclick: () => this.$router.push({name: "Login"})},
+                    {name: '首頁', onclick: () => this.$router.push({name: "ListVideo"})},
+                    {name: '收藏頁', onclick: () => this.$router.push({name: "Star"})},
+                    {name: '列表頁', onclick: () => this.$router.push({name: "ListVideo"})},
+                    {name: '撥放頁', onclick: () => this.$router.push({name: "Detail"})},
                 ]
             }
         }

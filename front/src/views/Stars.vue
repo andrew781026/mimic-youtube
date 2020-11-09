@@ -1,7 +1,8 @@
 <template>
     <div class="star-root">
+        <h1 class="text-left">查詢文字：{{searchText}}</h1>
         <div class="list-root">
-            <div v-for="(video ,index) in videos"
+            <div v-for="(video ,index) in starVideos"
                  :key="`video-${index}`"
                  class="card"
                  @click="openLink(video.id)"
@@ -25,38 +26,44 @@
                 </div>
             </div>
         </div>
-        <div>
-            <h1 @click="goPrev">上一頁</h1>
-            <h1 @click="goNext">下一頁</h1>
+        <div class="page-wrapper">
+            <h1 @click="goPrev" class="prevPage" :class="[ hasPrevPage &&'disabled']">
+                <i class="fa fas fa-angle-left arrow-icon"></i>
+                上一頁
+            </h1>
+            <h1>|</h1>
+            <h1 @click="goNext" class="nextPage" :class="[ hasNextPage &&'disabled']">
+                下一頁
+                <i class="fa fas fa-angle-right arrow-icon"></i>
+            </h1>
         </div>
     </div>
 </template>
 
 <script>
-    import VideoService from '@/services/videoService';
     import FavoriteService from '@/services/favoriteService';
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: "Stars",
+        computed: {
+            ...mapGetters({
+                searchText: '[searchText] getSearchText',
+                starVideos: '[starVideos] getStarVideos',
+                pageNumber: '[pageNumber] getPageNumber',
+                hasPrevPage: '[pageNumber] hasPrevPage',
+                hasNextPage: '[pageNumber] hasNextPage',
+            }),
+        },
         methods: {
-            showVideos(pageToken) {
+            ...mapActions({
+                search: '[searchText] SEARCH',
+                goPrev: '[pageNumber] PREV_PAGE',
+                goNext: '[pageNumber] NEXT_PAGE',
+            }),
+            showVideos() {
 
-                VideoService.getVideos(pageToken)
-                    .then(({videos, nextPageToken, prevPageToken}) => {
-
-                        this.videos = videos;
-                        this.nextPageToken = nextPageToken;
-                        this.prevPageToken = prevPageToken;
-                    })
-                    .catch(console.error);
-            },
-            goPrev() {
-
-                this.showVideos(this.prevPageToken);
-            },
-            goNext() {
-
-                this.showVideos(this.nextPageToken);
+                this.search(this.searchText).then(console.log).catch(console.error);
             },
             setStar(video, index) {
 
@@ -87,7 +94,6 @@
             */
 
             return {
-                videos: [],
                 nextPageToken: undefined,
                 prevPageToken: undefined,
             }
@@ -96,6 +102,44 @@
 </script>
 
 <style scoped lang="scss">
+
+    .page-wrapper {
+
+        display: flex;
+        justify-content: center;
+
+        .prevPage, .nextPage {
+
+            user-select: none;
+            cursor: pointer;
+            margin-right: 20px;
+            margin-left: 20px;
+            padding: 0 10px 5px 10px;
+
+            &:not(.disabled):hover {
+
+                background-color: #4dabf7;
+            }
+
+            &:not(.disabled):active {
+
+                background-color: darken(#4dabf7, 12%);;
+            }
+        }
+
+        .arrow-icon {
+            font-size: 1.4em;
+            font-weight: 900;
+            transform: translateY(2px);
+            padding: 0 10px;
+        }
+
+        .disabled {
+            cursor: not-allowed;
+            color: #909399;
+        }
+
+    }
 
     .list-root {
         display: flex;

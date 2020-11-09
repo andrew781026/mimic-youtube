@@ -1,9 +1,11 @@
 <template>
     <div class="search-bar-wrapper" title="搜尋檔案">
-        <i class="fa fas fa-search search-bar-icon"></i>
+        <i class="fa fas fa-search search-bar-icon cursor-pointer" @click="doSearch"></i>
         <input type="text"
+               :value="defaultText"
                class="search-bar"
-               @input="$emit('search',$event)"
+               @input="changeText"
+               @keyup.enter.stop.prevent="doSearch"
                :placeholder="placeholder">
     </div>
 </template>
@@ -12,8 +14,25 @@
     export default {
         name: "SearchBar",
         props: {
-            placeholder: String
-        }
+            placeholder: String,
+            defaultText: String,
+        },
+        methods: {
+            changeText(event) {
+
+                this.text = event.target.value;
+            },
+            doSearch() {
+
+                this.$emit('search', this.text);
+            }
+        },
+        data() {
+
+            return {
+                text: ''
+            }
+        },
     }
 </script>
 

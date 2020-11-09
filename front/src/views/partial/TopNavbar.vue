@@ -3,12 +3,13 @@
         <div class="flex-1">
             <h1>列表頁</h1>
         </div>
-        <search-bar placeholder="請輸入查詢文字" @search="search"/>
-        <img class="avatar" :src="require('@/assets/rufe.png')" alt="rufe">
+        <search-bar :default-text="searchText" placeholder="請輸入查詢文字" @search="search"/>
+        <img class="avatar" :src="avatar" alt="rufe">
     </header>
 </template>
 
 <script>
+    import {mapActions, mapGetters} from "vuex";
     import SearchBar from '@/components/SearchBar'
 
     export default {
@@ -19,10 +20,22 @@
         props: {
             height: String
         },
+        computed: {
+            ...mapGetters({
+                searchText: '[searchText] getSearchText',
+            }),
+        },
         methods: {
-            search(event) {
+            ...mapActions({
+                search: '[searchText] SEARCH',
+            }),
+        },
+        data() {
 
-                console.log(event.target.value);
+
+            return {
+                avatar: require('@/assets/user.png'),
+                // avatar: require('@/assets/rufe.png'),
             }
         }
     }
@@ -49,6 +62,7 @@
 
     .avatar {
 
+        padding: 3px;
         object-fit: cover;
         height: 60px;
         width: 60px;

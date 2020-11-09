@@ -1,10 +1,10 @@
 <template>
     <header class="top-header-root" :style="{height}">
         <div class="top-icon-wrapper">
-            <i class="fa fas fa-home icons" style="font-size: 40px"></i>
-            <i class="fa fas fa-heart icons" style="font-size: 34px"></i>
-            <i class="fa fas fa-film icons" style="font-size: 40px"></i>
-            <i class="fab fa-youtube icons" style="font-size: 40px"></i>
+            <i class="fa fas fa-home icons" @click="goTargetPath('ListVideo')"></i>
+            <i class="fa fas fa-heart icons" @click="goTargetPath('Star')"></i>
+            <i class="fa fas fa-film icons" @click="goTargetPath('ListVideo')"></i>
+            <i class="fab fa-youtube icons" @click="goTargetPath('Detail')"></i>
         </div>
         <div class="flex-1">
             <h1>{{title}}</h1>
@@ -15,7 +15,7 @@
                     @search="search"
         />
         <img class="avatar" :src="avatar" alt="rufe" @click="toggleMenu">
-        <float-menu v-if="menuShow" :show="menuShow"/>
+        <float-menu v-if="menuShow" :show="menuShow" @hide="toggleMenu"/>
     </header>
 </template>
 
@@ -46,6 +46,14 @@
             toggleMenu() {
 
                 this.menuShow = !this.menuShow
+            },
+            goTargetPath(pathName) {
+
+                if (this.$router.currentRoute.name !== pathName) {
+
+                    this.$router.push({name: pathName})
+                    this.menuShow = false;
+                }
             }
         },
         data() {
@@ -75,6 +83,7 @@
         }
 
         .icons {
+            font-size: 40px;
             margin-right: 20px;
             cursor: pointer;
 

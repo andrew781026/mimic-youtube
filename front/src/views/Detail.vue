@@ -1,7 +1,7 @@
 <template>
     <div class="detail-root" :style="{height:showHeight,width:showWidth}">
         <video-player :height="showHeight" :width="showWidth"/>
-        <h2 class="truncate">【谷阿莫】20分鐘看完20小時 G神不良的帥哥美女電視劇 金秀賢、徐睿知 2020《雖然是精神病但沒關係》</h2>
+        <h2 class="truncate" :title="title">{{title}}</h2>
         <span>
             第1220部《雖然是精神病但沒關係 / 虽然是精神病但没关系 / 사이코지만 괜찮아》我是谷阿莫的主頻道，影片主要會在這邊更新，若是主頻道出問題，可以去其他頻道觀看。
             <br>
@@ -38,6 +38,7 @@
 
 <script>
     import VideoPlayer from '@/components/VideoPlayer'
+    import {mapActions} from "vuex";
 
     export default {
         name: "Detail",
@@ -46,6 +47,8 @@
         },
         mounted() {
 
+            this.setTitle('影片明細');
+
             window.addEventListener('resize', this.reportWindowSize);
         },
         beforeDestroy() {
@@ -53,7 +56,9 @@
             window.removeEventListener('resize', this.reportWindowSize);
         },
         methods: {
-
+            ...mapActions({
+                setTitle: '[title] SET_TITLE',
+            }),
             reportWindowSize() {
 
                 this.height = window.innerHeight;
@@ -75,6 +80,7 @@
         data() {
 
             return {
+                title: '【谷阿莫】20分鐘看完20小時 G神不良的帥哥美女電視劇 金秀賢、徐睿知 2020《雖然是精神病但沒關係》',
                 width: window.innerWidth,
                 height: window.innerHeight,
             }

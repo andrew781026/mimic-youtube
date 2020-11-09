@@ -1,6 +1,6 @@
 <template>
     <div class="star-root">
-        <h1 class="text-left">收藏影片</h1>
+        <h1 class="text-left">查詢文字：{{searchText}}</h1>
         <div class="list-root">
             <div v-for="(video ,index) in starVideos"
                  :key="`video-${index}`"
@@ -19,15 +19,20 @@
                         <span class="line-clamp">描述：{{video.description}}</span>
                     </div>
                 </div>
+                <div class="fav-wrapper" @click.stop="setStar(video,index)">
+                    <i id="heart-icon"
+                       class="fa fas fa-heart"
+                       :class="[video.isFav ? 'is-starred':'not-starred']"/>
+                </div>
             </div>
         </div>
         <div class="page-wrapper">
-            <h1 @click="goPrev" class="prevPage" :class="[ !hasPrevPage('starVideos') && 'disabled']">
+            <h1 @click="goPrev" class="prevPage" :class="[ !hasPrevPage('videos') &&'disabled']">
                 <i class="fa fas fa-angle-left arrow-icon"></i>
                 上一頁
             </h1>
             <h1>|</h1>
-            <h1 @click="goNext" class="nextPage" :class="[ !hasNextPage('starVideos') && 'disabled']">
+            <h1 @click="goNext" class="nextPage" :class="[ !hasNextPage('videos') &&'disabled']">
                 下一頁
                 <i class="fa fas fa-angle-right arrow-icon"></i>
             </h1>
@@ -36,12 +41,14 @@
 </template>
 
 <script>
+    import FavoriteService from '@/services/favoriteService';
     import {mapActions, mapGetters} from "vuex";
 
     export default {
-        name: "Stars",
+        name: "ListVideo",
         computed: {
             ...mapGetters({
+                searchText: '[searchText] getSearchText',
                 starVideos: '[starVideos] getStarVideos',
                 pageNumber: '[pageNumber] getPageNumber',
                 hasPrevPage: '[pageNumber] hasPrevPage',
@@ -50,14 +57,22 @@
         },
         methods: {
             ...mapActions({
-                setTitle: '[title] SET_TITLE',
+                search: '[searchText] SEARCH',
                 goPrev: '[pageNumber] PREV_PAGE',
                 goNext: '[pageNumber] NEXT_PAGE',
-                initStarVideos: '[starVideos] INIT_STAR_VIDEOS',
+                setTitle: '[title] SET_TITLE',
             }),
             showVideos() {
 
-                this.initStarVideos().then(console.log).catch(console.error);
+                this.search(this.searchText).then(console.log).catch(console.error);
+            },
+            setStar(video, index) {
+
+                const newVideo = {...video, isFav: !video.isFav};
+
+                FavoriteService.toggleFavorite(video)
+                    .then(() => this.videos.splice(index, 1, newVideo))
+                    .catch(console.error);
             },
             openLink(videoId) {
 
@@ -67,11 +82,23 @@
         mounted() {
 
             this.showVideos();
-            this.setTitle('收藏影片');
+            this.setTitle('列表頁面');
         },
         data() {
 
-            return {}
+            /*
+                2. 收藏功能
+                3. 影片資訊需有包含：
+                    1. 圖片
+                    1. 影片長度
+                    1. 影片標題
+                    1. 影片描述
+            */
+
+            return {
+                nextPageToken: undefined,
+                prevPageToken: undefined,
+            }
         }
     }
 </script>
@@ -98,7 +125,7 @@
 
             &:not(.disabled):active {
 
-                background-color: darken(#4dabf7, 12%);;
+                background-color: darken(#4dabf7, 12%);
             }
         }
 

@@ -33,8 +33,8 @@
         width: 100vw;
     }
 
-    .home-main{
-        padding:20px;
+    .home-main {
+        padding: 20px;
         max-height: 100vh;
         overflow: auto;
     }

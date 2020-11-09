@@ -84,6 +84,14 @@ class VideoService {
         return {videos, nextPageToken, prevPageToken};
     };
 
+
+    // 列出所有喜好的影片
+    static getFavoriteVideos = async () => {
+
+        const videos = await FavoriteService.list();
+        return videos.filter(item => item.isFav);
+    };
+
 }
 
 export default VideoService;

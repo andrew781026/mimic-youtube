@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+
+<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-analytics.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-firestore.js"></script>
+
+<script>
+    const email = 'andrew7810262000@gmail.com.tw';
+    const password = '!@#edcxsw';
+
+    // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
+    var firebaseConfig = {
+        apiKey: "API_KEY",
+        authDomain: "PROJECT_ID.firebaseapp.com",
+        databaseURL: "https://PROJECT_ID.firebaseio.com",
+        projectId: "PROJECT_ID",
+        storageBucket: "PROJECT_ID.appspot.com",
+        messagingSenderId: "SENDER_ID",
+        appId: "APP_ID",
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    const formatter = data => ({
+
+        uid: data.user.uid,
+        displayName: data.user.displayName,
+        photoURL: data.user.displayName,
+        email: data.user.email,
+        emailVerified: data.user.emailVerified,
+        phoneNumber: data.user.phoneNumber,
+    });
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(data => {
+
+            console.log('newUser=', formatter(data));
+            console.log('data=', JSON.stringify(data));
+        })
+        .catch(function (error) {
+
+            if (error.code === 'auth/email-already-in-use') {
+
+                firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then(data => {
+
+                        /*
+                        const dd = {
+                            "user": {
+                                "uid": "oPG96XEuZ3PKCesb0nEx37KG1bb2",
+                                "displayName": null,
+                                "photoURL": null,
+                                "email": "andrew7810262000@gmail.com.tw",
+                                "emailVerified": false,
+                                "phoneNumber": null,
+                                "isAnonymous": false,
+                                "tenantId": null,
+                                "providerData": [{
+                                    "uid": "andrew7810262000@gmail.com.tw",
+                                    "displayName": null,
+                                    "photoURL": null,
+                                    "email": "andrew7810262000@gmail.com.tw",
+                                    "phoneNumber": null,
+                                    "providerId": "password"
+                                }],
+                                "apiKey": "AIzaSyB6N5_OrrE68U0a5p16h2UcgN8d47OYZPk",
+                                "appName": "[DEFAULT]",
+                                "authDomain": "mimic--294408.firebaseapp.com",
+                                "stsTokenManager": {
+                                    "apiKey": "AIzaSyB6N5_OrrE68U0a5p16h2UcgN8d47OYZPk",
+                                    "refreshToken": "AG8BCne3D77NiXMy_RkJT2wJmIjTZrhAlMGDlTBwna-hCScjxIb1B1owLzT0seekQkYry2-ZNyyLo7v8L3uY0jIw70L0SoH1P40AGTgFAcjNeYsBX6OI3uQt0bUcZYRommKFkrf50tlD8NQnU4LbYAdd4dQc8no5Z-dqFNEfVOjO-o1p4GwAWNOB35nYrtKhYpLYGEj1wm8wVWNzX2N82ZHt_kfgMJInBhd0THAzrdZ3cLtK5ZrPvA0",
+                                    "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJmOGI1NTdjMWNkMWUxZWM2ODBjZTkyYWFmY2U0NTIxMWUxZTRiNDEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWltaWMteW91dHViZS0yOTQ0MDgiLCJhdWQiOiJtaW1pYy15b3V0dWJlLTI5NDQwOCIsImF1dGhfdGltZSI6MTYwNDk5NTkzMywidXNlcl9pZCI6Im9QRzk2WEV1WjNQS0Nlc2IwbkV4MzdLRzFiYjIiLCJzdWIiOiJvUEc5NlhFdVozUEtDZXNiMG5FeDM3S0cxYmIyIiwiaWF0IjoxNjA0OTk1OTMzLCJleHAiOjE2MDQ5OTk1MzMsImVtYWlsIjoiYW5kcmV3NzgxMDI2MjAwMEBnbWFpbC5jb20udHciLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYW5kcmV3NzgxMDI2MjAwMEBnbWFpbC5jb20udHciXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.N3Hesi35V_vJ8XIOrajyq2i5jNiX-WJg7r0irLKnaPaibEXxQnD4tVB4lvtYk44CC2r1n65sa_rwZtpsSYXMl_-r1CpsYjtReTidI6njvBym6SLBm008nHt29Lfyzuur5hDtw_OBsKf-iCiKXcfc4wqMuIc8derJYlcGOqC51orIeYrgEq1qrCB0N_WB9wuUUZtCoigy5P946kt0y0cv1ACTn9rBLdujHB_T3MAIUYelaMm7i3ID52KOLSbVYyOHEl3RcgPlWjHM_hSVPVz1G2TdMfozubn_Vw2Muk627QIC5y9FXIKSYwyXE-26nqsyzbEptAFq_ytkJoVQoBNWdQ",
+                                    "expirationTime": 1604999533000
+                                },
+                                "redirectEventId": null,
+                                "lastLoginAt": "1604995933282",
+                                "createdAt": "1604995933282",
+                                "multiFactor": {"enrolledFactors": []}
+                            },
+                            "credential": null,
+                            "additionalUserInfo": {"providerId": "password", "isNewUser": true},
+                            "operationType": "signIn"
+                        }
+                         */
+
+                        console.log('newUser=', formatter(data));
+                        console.log('data=', JSON.stringify(data));
+                    })
+                    .catch(function (error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        console.error('errorCode=', errorCode);
+                        console.error('errorMessage=', errorMessage);
+
+                        // ...
+                    });
+
+            } else {
+
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error('errorCode=', errorCode);
+                console.error('errorMessage=', errorMessage);
+            }
+
+            // ...
+        });
+</script>
+</body>
+</html>

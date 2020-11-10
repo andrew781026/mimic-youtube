@@ -1,4 +1,4 @@
-const db = require('./init');
+const {db} = require('./init');
 const EventEmitter = require('events').EventEmitter;
 
 const ObserveUtils = {

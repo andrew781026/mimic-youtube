@@ -1,4 +1,4 @@
-import FireStoreDao from '@/utils/firestore/fireStoreDao';
+import FireStoreDao from '@/utils/firebase/fireStoreDao';
 
 const FavoriteService = {
 

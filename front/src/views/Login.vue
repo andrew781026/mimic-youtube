@@ -18,9 +18,18 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
+
     export default {
         name: "Login",
+        mounted() {
+
+            this.setTitle('登入 | 電影街');
+        },
         methods: {
+            ...mapActions({
+                setTitle: '[title] SET_TITLE',
+            }),
             login() {
                 this.$router.push({name: "Star"});
             }

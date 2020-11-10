@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="page-wrapper">
-            <h1 @click="goPrev" class="prevPage" :class="[ !hasPrevPage('videos') &&'disabled']">
+            <h1 @click="goPrev" class="prevPage" :class="[ !hasPrevPage &&'disabled']">
                 <i class="fa fas fa-angle-left arrow-icon"></i>
                 上一頁
             </h1>

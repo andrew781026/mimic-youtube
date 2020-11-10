@@ -69,7 +69,7 @@ export default new Vuex.Store({
         '[searchText] getSearchText': state => state.searchText,
         '[pageNumber] getPageNumber': state => state.pageNumber,
         '[numPerPage] getNumPerPage': state => state.numPerPage,
-        '[pageNumber] hasPrevPage': state => arrayName => state[arrayName].pageNumber > 1,
+        '[pageNumber] hasPrevPage': state => state.pageNumber > 1,
         '[pageNumber] hasNextPage': state => arrayName => {
 
             const pageNumber = state.pageNumber;

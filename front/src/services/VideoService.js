@@ -1,4 +1,4 @@
-import YoutubeUtils from '@/utils/youtubeUtils';
+import YoutubeUtils from '@/utils/youtube/youtubeUtils';
 import FavoriteService from './favoriteService';
 
 class VideoService {

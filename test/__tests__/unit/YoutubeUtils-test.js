@@ -1,4 +1,4 @@
-import YoutubeUtils from '../../../front/src/utils/youtubeUtils';
+import YoutubeUtils from '@/utils/youtube/youtubeUtils';
 
 // TODO 需要讓 Jest 可以使用 import . export
 describe('測試 ', () => {

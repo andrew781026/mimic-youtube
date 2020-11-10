@@ -28,4 +28,4 @@ pnpm-debug.log*
 
 
 serviceAccountKey.json
-/front/src/utils/firestore/serviceAccountKey.json
+youtubeConfig.json

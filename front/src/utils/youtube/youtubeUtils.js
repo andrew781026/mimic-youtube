@@ -5,7 +5,7 @@
  *     https://developers.google.com/youtube/v3/docs/videos/list
  * */
 const axios = require('axios');
-const API_KEY = 'AIzaSyA1HsDdjJDtuw2L3zVMA_9lWdrqn5K6_J4';
+const API_KEY = require('./youtubeConfig.json').apiKey;
 
 /**
  * part 中可填寫的參數

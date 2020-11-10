@@ -2,7 +2,7 @@
     <div class="star-root">
         <h1 class="text-left">查詢文字：{{searchText}}</h1>
         <div class="list-root">
-            <div v-for="(video ,index) in starVideos"
+            <div v-for="(video ,index) in videos"
                  :key="`video-${index}`"
                  class="card"
                  @click="openLink(video.id)"
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-    import FavoriteService from '@/services/favoriteService';
     import {mapActions, mapGetters} from "vuex";
 
     export default {
@@ -49,7 +48,7 @@
         computed: {
             ...mapGetters({
                 searchText: '[searchText] getSearchText',
-                starVideos: '[starVideos] getStarVideos',
+                videos: '[videos] getVideos',
                 pageNumber: '[pageNumber] getPageNumber',
                 hasPrevPage: '[pageNumber] hasPrevPage',
                 hasNextPage: '[pageNumber] hasNextPage',
@@ -61,18 +60,15 @@
                 goPrev: '[pageNumber] PREV_PAGE',
                 goNext: '[pageNumber] NEXT_PAGE',
                 setTitle: '[title] SET_TITLE',
+                toggleSingleFavorite: '[videos] TOGGLE_SINGLE_FAVORITE',
             }),
             showVideos() {
 
                 this.search(this.searchText).then(console.log).catch(console.error);
             },
-            setStar(video, index) {
+            setStar(video) {
 
-                const newVideo = {...video, isFav: !video.isFav};
-
-                FavoriteService.toggleFavorite(video)
-                    .then(() => this.videos.splice(index, 1, newVideo))
-                    .catch(console.error);
+                this.toggleSingleFavorite(video).catch(console.error);
             },
             openLink(videoId) {
 
@@ -85,15 +81,6 @@
             this.setTitle('列表頁面');
         },
         data() {
-
-            /*
-                2. 收藏功能
-                3. 影片資訊需有包含：
-                    1. 圖片
-                    1. 影片長度
-                    1. 影片標題
-                    1. 影片描述
-            */
 
             return {
                 nextPageToken: undefined,

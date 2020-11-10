@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VideoService from "@/services/videoService";
+import FavoriteService from "@/services/favoriteService";
 
 Vue.use(Vuex)
 
@@ -8,7 +9,7 @@ export default new Vuex.Store({
     state: {
         title: '首頁',
         login: '',       // user 登入資訊
-        videos: [],  // user 喜好的影片
+        videos: [],      // user 查詢的影片
         starVideos: [],  // user 喜好的影片
         pageNumber: 1,
         numPerPage: 12,
@@ -19,6 +20,11 @@ export default new Vuex.Store({
         '[searchText] SET_SEARCH_TEXT': (state, searchText) => state.searchText = searchText,
         '[starVideos] SET_STAR_VIDEOS': (state, starVideos) => state.starVideos = starVideos,
         '[videos] SET_VIDEOS': (state, videos) => state.videos = videos,
+        '[videos] TOGGLE_SINGLE_FAVORITE': (state, newVideo) => {
+
+            const index = state.videos.findIndex(video => video.id === newVideo.id);
+            state.videos.splice(index, 1, newVideo);
+        },
         '[pageNumber] SET_PAGE_NUMBER': (state, pageNumber) => state.pageNumber = pageNumber,
         '[pageNumber] PREV_PAGE': (state) => --state.pageNumber,
         '[pageNumber] NEXT_PAGE': (state) => ++state.pageNumber,
@@ -47,6 +53,14 @@ export default new Vuex.Store({
         },
         '[starVideos] SET_STAR_VIDEOS': ({commit}, starVideos) => commit('[starVideos] SET_STAR_VIDEOS', starVideos),
         '[videos] SET_VIDEOS': ({commit}, videos) => commit('[videos] SET_VIDEOS', videos),
+        '[videos] TOGGLE_SINGLE_FAVORITE': async ({commit}, orgVideo) => {
+
+            const newVideo = {...orgVideo, isFav: !orgVideo.isFav};
+            await FavoriteService.toggleFavorite(orgVideo);
+            commit('[videos] TOGGLE_SINGLE_FAVORITE', newVideo);
+
+            return newVideo;
+        },
         '[pageNumber] PREV_PAGE': ({commit}) => commit('[pageNumber] PREV_PAGE'),
         '[pageNumber] NEXT_PAGE': ({commit}) => commit('[pageNumber] NEXT_PAGE'),
     },

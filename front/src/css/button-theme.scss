@@ -131,3 +131,39 @@ $btn-config: (
     @include button-variant($color, $bg, $border-color);
   }
 }
+
+.btn_sample {
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #611BBD;
+  border-color: #130269;
+  border-radius: 4px;
+  line-height: 2rem;
+  font-size: 1.2em;
+  font-weight: 900;
+
+  &.disabled {
+    cursor: not-allowed;
+    border-color: transparent;
+    color: #B0BEC5;
+    background-color: #CFD8DC;
+    outline: none;
+  }
+
+  &:not(.disabled) {
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: #ffffff;
+      background-color: #49247A;
+      border-color: #130269;
+    }
+
+    &:active {
+      outline: none;
+      transform: translateY(2px);
+    }
+  }
+
+}

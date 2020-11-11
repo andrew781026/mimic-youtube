@@ -57,7 +57,9 @@
             }),
             showVideos() {
 
-                this.initStarVideos().then(console.log).catch(console.error);
+                this.initStarVideos()
+                    // .then(console.log)
+                    .catch(console.error);
             },
             openLink(videoId) {
 

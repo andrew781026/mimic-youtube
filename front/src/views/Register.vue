@@ -3,24 +3,30 @@
         <div class="bg-img"/>
         <div class="login-wrapper">
             <div class="login-title">
-                <span>歡迎到 📀 </span>
-                <span> 🎬 電影街</span>
+                <div class="flex">
+                    <div> 🐳</div>
+                    <span class="mx-4">註冊帳號</span>
+                    <div class="horizon-mirror"> 🐳</div>
+                </div>
             </div>
             <div class="login-form">
-
                 <p>帳號：</p>
                 <input class="custom-input" type="text" id="username" placeholder="在此輸入帳號" v-model="username">
                 <p>密碼：</p>
-                <input class="custom-input" type="password" id="password" placeholder="在此輸入密碼" v-model="password">
-                <span v-if="error" class="mt-6 text-red-500 font-900">{{error}}</span>
-                <button id="login"
-                        class="btn_sample w-full mt-12 mb-6"
-                        :class="[!canLogin && 'disabled']"
-                        @click="canLogin && login()"
+                <input class="custom-input"
+                       type="password"
+                       id="password"
+                       placeholder="在此輸入密碼"
+                       v-model="password"
                 >
-                    登入
+                <button id="register"
+                        class="btn_sample w-full mt-12 mb-6"
+                        :class="[!canRegister && 'disabled']"
+                        @click="canRegister && register()"
+                >
+                    註冊
                 </button>
-                <router-link :to="{name:'Register'}" class="mb-24">還沒有帳號？註冊一個屬於你的 📓</router-link>
+                <span class="mb-24 text-red-500 font-900">{{error}}</span>
             </div>
         </div>
     </div>
@@ -31,24 +37,37 @@
     import FirebaseAuth from "@/utils/firebase/firebaseAuth";
 
     export default {
-        name: "Login",
-        mounted() {
-
-            this.setTitle('登入 | 電影街');
-        },
+        name: "Register",
         computed: {
-            canLogin() {
+            canRegister() {
 
                 return Boolean(this.username) && Boolean(this.password);
             }
+        },
+        mounted() {
+
+            this.setTitle('註冊 | 電影街');
         },
         methods: {
             ...mapActions({
                 setTitle: '[title] SET_TITLE',
             }),
-            login() {
+            register() {
 
-                FirebaseAuth.signInWithEmailAndPassword(this.username, this.password)
+                /*
+                let a = {
+                    "p": {
+                        "code": "auth/invalid-email",
+                        "message": "The email address is badly formatted.",
+                    },
+                    "q": {
+                        "code": "auth/weak-password",
+                        "message": "Password should be at least 6 characters",
+                    }
+                };
+                 */
+
+                FirebaseAuth.createUserWithEmailAndPassword(this.username, this.password)
                     .then(() => this.$router.push({name: "Star"}))
                     .catch(e => {
 
@@ -102,12 +121,10 @@
     }
 
     .login-title {
-
         font-size: 50px;
         font-weight: 700;
         display: flex;
         flex-direction: column;
-
     }
 
     .login-wrapper {
@@ -124,7 +141,7 @@
         box-shadow: 0 4px 7px 1px rgba(0, 0, 0, 0.3);
         border-radius: 20px;
 
-        height: 520px;
+        height: 450px;
         width: 450px;
 
         @media (max-width: 500px) {

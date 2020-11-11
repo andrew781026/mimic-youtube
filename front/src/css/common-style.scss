@@ -1,4 +1,3 @@
-
 // 多行 ellipsis : https://css-tricks.com/almanac/properties/l/line-clamp/
 .line-clamp {
   display: -webkit-box;
@@ -24,16 +23,16 @@
   text-align: left;
 }
 
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
-.flex{
+.flex {
   display: flex;
 }
 
-.flex-1{
-  flex:1;
+.flex-1 {
+  flex: 1;
 }
 
 .p-6 {
@@ -48,13 +47,35 @@
   width: 50%;
 }
 
-.relative{
+.relative {
   position: relative;
 }
 
-$positions: ('top', 'bottom','left','right');
+.horizon-mirror {
+  transform: scale(-1, 1);
+}
 
-$margin-config: (12,24);
+.mx-2 {
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.mx-4 {
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
+}
+
+.text-red-500 {
+  color: #f44336;
+}
+
+.font-900 {
+  font-weight: 900;
+}
+
+$positions: ('top', 'bottom', 'left', 'right');
+
+$margin-config: (4, 6, 12, 24, 30);
 
 @each $number in $margin-config {
 

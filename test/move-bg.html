@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>背景隨滑鼠移動</title>
+
+    <style>
+
+        /* --------- css reset ---------- */
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+
+        /* --------- css reset ---------- */
+
+
+        /* --------- utility-first CSS ---------- */
+
+        .min-vh-100 {
+            min-height: 100vh;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        /* --------- utility-first CSS ---------- */
+
+        .move-bg {
+            width: auto;
+            height: 100%;
+            background-size: cover;
+            transform: scale(1.1);
+            -webkit-backface-visibility: hidden;
+        }
+
+        .bg-img {
+            background: url('https://res.cloudinary.com/andrew781026/image/upload/v1605067901/background/typer_x9uifh.jpg') center center no-repeat;
+            background-size: cover;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<main class="overflow-hidden w-full">
+    <div class="move-bg min-vh-100 w-full bg-img"></div>
+</main>
+
+<script>
+
+    let lFollowX = 0,
+        lFollowY = 0,
+        x = 0,
+        y = 0,
+        friction = 1 / 30;
+
+    function moveBackground() {
+        x += (lFollowX - x) * friction;
+        y += (lFollowY - y) * friction;
+
+        translate = 'translate(' + x + 'px, ' + y + 'px) scale(1.1)';
+        document.querySelector('.move-bg').style.transform = translate;
+
+        window.requestAnimationFrame(moveBackground);
+    }
+
+
+    // Setup our function to run on various events
+    const lazyMove = (e) => {
+
+        var lMouseX = Math.max(-100, Math.min(100, window.innerWidth / 2 - e.clientX));
+        var lMouseY = Math.max(-100, Math.min(100, window.innerHeight / 2 - e.clientY));
+        lFollowX = (10 * lMouseX) / 100; // 100 : 12 = lMouxeX : lFollow
+        lFollowY = (10 * lMouseY) / 100;
+    };
+
+    // Add our event listeners
+    window.addEventListener('mousemove', lazyMove);
+    window.addEventListener('click', lazyMove);
+    moveBackground();
+
+</script>
+
+</body>
+</html>

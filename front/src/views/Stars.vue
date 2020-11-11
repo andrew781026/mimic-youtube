@@ -22,12 +22,12 @@
             </div>
         </div>
         <div class="page-wrapper">
-            <h1 @click="goPrev" class="prevPage" :class="[ !hasPrevPage && 'disabled']">
+            <h1 @click="hasPrevPage && goPrev()" class="prevPage" :class="[ !hasPrevPage && 'disabled']">
                 <i class="fa fas fa-angle-left arrow-icon"></i>
                 上一頁
             </h1>
             <h1>|</h1>
-            <h1 @click="goNext" class="nextPage" :class="[ !hasNextPage('starVideos') && 'disabled']">
+            <h1 @click="hasNextPage('starVideos') && goNext()" class="nextPage" :class="[ !hasNextPage('starVideos') && 'disabled']">
                 下一頁
                 <i class="fa fas fa-angle-right arrow-icon"></i>
             </h1>
